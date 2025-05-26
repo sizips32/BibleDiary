@@ -28,7 +28,7 @@ export default function Home() {
     const [diaries, setDiaries] = useState<DiaryItem[]>([])
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [editId, setEditId] = useState<string | null>(null)
-    const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw'>('menu')
+    const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw' | 'edit-egw'>('menu')
 
     useEffect(() => {
         setDiaries(loadDiaries())
@@ -79,6 +79,12 @@ export default function Home() {
         setEditId(null)
     }
 
+    const handleAddEgw = () => {
+        setEditId(null)
+        setView('egw')
+        setSelectedId(null)
+    }
+
     const selectedDiary = diaries.find(d => d.id === selectedId)
     const editDiary = diaries.find(d => d.id === editId)
 
@@ -95,7 +101,8 @@ export default function Home() {
                     <MainMenu
                         onAdd={handleAdd}
                         onList={() => setView('list')}
-                        onEgw={() => setView('egw')}
+                        onEgw={handleAddEgw}
+                        egwLabel="영감의 글 묵상"
                     />
                 )}
                 {view === 'add' && (

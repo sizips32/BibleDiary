@@ -33,7 +33,7 @@ interface DiaryListProps {
 }
 
 function getTypeLabel(type: DiaryType) {
-    return type === 'egw' ? '예언의 신 묵상' : '말씀 묵상'
+    return type === 'egw' ? '영감의 글 묵상' : '말씀 묵상'
 }
 
 export default function DiaryList({ diaries, onEdit, onDelete }: DiaryListProps) {

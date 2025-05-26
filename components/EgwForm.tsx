@@ -48,7 +48,7 @@ export default function EgwForm({ initialForm, onSave, onCancel, isEditMode }: E
             onSubmit={handleSubmit}
             className="max-w-2xl mx-auto bg-white/80 rounded-xl shadow-lg p-8 space-y-6 mt-8"
         >
-            <h1 className="text-2xl font-bold text-center text-blue-700 mb-2">✨ 예언의 신 묵상 기록 ✨</h1>
+            <h1 className="text-2xl font-bold text-center text-blue-700 mb-2">✨ 영감의 글 묵상 기록 ✨</h1>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                     <label className="block font-semibold text-blue-800">📅 날짜</label>

@@ -9,7 +9,7 @@ interface EgwCardProps {
 export default function EgwCard({ form, onEdit }: EgwCardProps) {
     return (
         <div className="max-w-2xl mx-auto bg-white/90 rounded-xl shadow-lg p-8 mt-8 space-y-6 border border-blue-200">
-            <h2 className="text-2xl font-bold text-blue-700 text-center mb-2">✨ 예언의 신 묵상 요약 ✨</h2>
+            <h2 className="text-2xl font-bold text-blue-700 text-center mb-2">✨ 영감의 글 묵상 요약 ✨</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <div className="mb-2"><span className="font-semibold text-blue-800">📅 날짜:</span> {form.date}</div>
