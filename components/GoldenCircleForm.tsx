@@ -82,7 +82,7 @@ export default function GoldenCircleForm({ initialForm, onSave, onCancel, isEdit
             </div>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
-                    <label className="block font-semibold text-yellow-800">�� 유튜브 영상 제목</label>
+                    <label className="block font-semibold text-yellow-800">🎬 유튜브 영상 제목</label>
                     <input
                         type="text"
                         name="youtubeTitle"
