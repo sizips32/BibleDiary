@@ -28,7 +28,7 @@ export default function Home() {
     const [diaries, setDiaries] = useState<DiaryItem[]>([])
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [editId, setEditId] = useState<string | null>(null)
-    const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw' | 'edit-egw'>('menu')
+    const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw' | 'edit-egw' | 'egw-summary'>('menu')
     const [editType, setEditType] = useState<'bible' | 'egw' | null>(null)
 
     useEffect(() => {
@@ -73,9 +73,14 @@ export default function Home() {
         } else {
             setDiaries([{ ...item }, ...diaries])
         }
-        setView('list')
+        if (item.type === 'egw') {
+            setView('egw-summary')
+            setSelectedId(item.id)
+        } else {
+            setView('list')
+            setSelectedId(item.id)
+        }
         setEditId(null)
-        setSelectedId(item.id)
     }
 
     const handleCancel = () => {
@@ -149,6 +154,9 @@ export default function Home() {
                         onCancel={handleCancel}
                         isEditMode={!!editId}
                     />
+                )}
+                {view === 'egw-summary' && selectedDiary && (
+                    <EgwCard form={selectedDiary} onEdit={() => handleEdit(selectedDiary.id)} />
                 )}
                 <footer className="text-center text-yellow-700 mt-12 mb-4">
                     © {new Date().getFullYear()} 승리복음 매일 묵상 플래너
