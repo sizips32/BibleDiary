@@ -14,7 +14,7 @@ export default function MainMenu({ onAdd, onList, onEgw }: MainMenuProps) {
                     className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-xl shadow text-lg"
                     onClick={onAdd}
                 >
-                    새 묵상 기록 추가
+                    말씀 묵상 기도
                 </button>
                 <button
                     className="bg-yellow-200 hover:bg-yellow-300 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow text-lg"
