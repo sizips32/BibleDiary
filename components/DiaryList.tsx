@@ -1,23 +1,39 @@
 import React from 'react'
 
+export type DiaryType = 'bible' | 'egw'
+
 export interface DiaryItem {
     id: string
+    type: DiaryType
     date: string
-    scripture: string
-    keyVerse: string
-    why: string
-    how: string
-    what: string
-    prayer: string
-    summary: string
+    scripture?: string
+    keyVerse?: string
+    why?: string
+    how?: string
+    what?: string
+    prayer?: string
+    summary?: string
     youtubeTitle?: string
     youtubeUrl?: string
+    // egw용 필드
+    bookTitle?: string
+    author?: string
+    pageRange?: string
+    excerpt?: string
+    egwKey?: string
+    reflection?: string
+    egwPrayer?: string
+    tags?: string
 }
 
 interface DiaryListProps {
     diaries: DiaryItem[]
     onEdit: (id: string) => void
     onDelete: (id: string) => void
+}
+
+function getTypeLabel(type: DiaryType) {
+    return type === 'egw' ? '예언의 신 묵상' : '말씀 묵상'
 }
 
 export default function DiaryList({ diaries, onEdit, onDelete }: DiaryListProps) {
@@ -30,13 +46,19 @@ export default function DiaryList({ diaries, onEdit, onDelete }: DiaryListProps)
     }
     return (
         <div className="max-w-2xl mx-auto mt-8">
-            <h2 className="text-xl font-bold text-yellow-700 mb-4">📚 저장된 묵상 기록</h2>
+            <h2 className="text-xl font-bold text-yellow-700 mb-4">📚 묵상 기도 목록</h2>
             <ul className="space-y-4">
                 {diaries.map((item) => (
                     <li key={item.id} className="bg-white/80 rounded-lg shadow p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                         <div>
-                            <div className="font-semibold text-yellow-800">{item.date} | {item.scripture}</div>
-                            <div className="text-sm text-gray-600">{item.summary}</div>
+                            <div className="font-semibold text-yellow-800 flex items-center gap-2">
+                                <span className={item.type === 'egw' ? 'bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs' : 'bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs'}>
+                                    {getTypeLabel(item.type)}
+                                </span>
+                                {item.date} {item.scripture && `| ${item.scripture}`}
+                                {item.bookTitle && `| ${item.bookTitle}`}
+                            </div>
+                            <div className="text-sm text-gray-600">{item.summary || item.egwKey}</div>
                             {item.youtubeTitle && item.youtubeUrl && (
                                 <div className="text-xs mt-1">
                                     <span className="text-blue-700">🎬

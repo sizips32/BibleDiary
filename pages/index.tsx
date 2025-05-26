@@ -4,6 +4,8 @@ import GoldenCircleForm from '../components/GoldenCircleForm'
 import DiaryList, { DiaryItem } from '../components/DiaryList'
 import SummaryCard from '../components/SummaryCard'
 import MainMenu from '../components/MainMenu'
+import EgwForm from '../components/EgwForm'
+import EgwCard from '../components/EgwCard'
 
 const STORAGE_KEY = 'bible-diary-list-v1'
 

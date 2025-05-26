@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { DiaryItem } from './DiaryList'
 
 interface FormProps {
-    initialForm?: DiaryItem | null
+    initialForm?: Partial<DiaryItem> | null
     onSave: (item: DiaryItem) => void
     onCancel: () => void
     isEditMode: boolean
 }
 
 const emptyForm: Omit<DiaryItem, 'id'> = {
+    type: 'bible',
     date: '',
     scripture: '',
     keyVerse: '',
