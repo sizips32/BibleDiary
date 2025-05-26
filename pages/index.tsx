@@ -29,6 +29,7 @@ export default function Home() {
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [editId, setEditId] = useState<string | null>(null)
     const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw' | 'edit-egw'>('menu')
+    const [editType, setEditType] = useState<'bible' | 'egw' | null>(null)
 
     useEffect(() => {
         setDiaries(loadDiaries())
@@ -81,6 +82,7 @@ export default function Home() {
 
     const handleAddEgw = () => {
         setEditId(null)
+        setEditType('egw')
         setView('egw')
         setSelectedId(null)
     }
@@ -132,17 +134,13 @@ export default function Home() {
                         />
                     </>
                 )}
-                {view === 'egw' && (
-                    <div className="flex flex-col items-center justify-center min-h-[60vh]">
-                        <div className="text-2xl font-bold text-gray-700 mb-4">예언의 신 묵상</div>
-                        <div className="text-gray-500 text-lg">Coming Soon...</div>
-                        <button
-                            className="mt-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded shadow"
-                            onClick={() => setView('menu')}
-                        >
-                            ← 메인 메뉴로
-                        </button>
-                    </div>
+                {view === 'egw' && editType === 'egw' && (
+                    <EgwForm
+                        initialForm={editDiary || null}
+                        onSave={handleSave}
+                        onCancel={handleCancel}
+                        isEditMode={!!editId}
+                    />
                 )}
                 <footer className="text-center text-yellow-700 mt-12 mb-4">
                     © {new Date().getFullYear()} 승리복음 매일 묵상 플래너
