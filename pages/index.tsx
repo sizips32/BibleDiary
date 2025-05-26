@@ -102,7 +102,6 @@ export default function Home() {
                         onAdd={handleAdd}
                         onList={() => setView('list')}
                         onEgw={handleAddEgw}
-                        egwLabel="영감의 글 묵상"
                     />
                 )}
                 {view === 'add' && (

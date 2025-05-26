@@ -1,18 +1,8 @@
 import React from 'react'
+import { DiaryItem } from './DiaryList'
 
 interface Props {
-    form: {
-        date: string
-        scripture: string
-        keyVerse: string
-        why: string
-        how: string
-        what: string
-        prayer: string
-        summary: string
-        youtubeTitle?: string
-        youtubeUrl?: string
-    }
+    form: Partial<DiaryItem>
     onEdit: () => void
 }
 
