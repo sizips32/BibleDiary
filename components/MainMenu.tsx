@@ -9,24 +9,24 @@ interface MainMenuProps {
 export default function MainMenu({ onAdd, onList, onEgw }: MainMenuProps) {
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
-            <div className="flex flex-col gap-4 w-full max-w-xs mt-2 mb-6">
+            <div className="flex flex-row gap-4 w-full max-w-2xl mx-auto mb-6">
                 <button
-                    className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-xl shadow text-lg"
+                    className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-6 rounded-xl shadow text-lg"
                     onClick={onAdd}
                 >
                     말씀 묵상 기도
                 </button>
                 <button
-                    className="bg-yellow-200 hover:bg-yellow-300 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow text-lg"
-                    onClick={onList}
-                >
-                    묵상 기도 목록 보기
-                </button>
-                <button
-                    className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-xl shadow text-lg"
+                    className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-xl shadow text-lg"
                     onClick={onEgw}
                 >
                     영감의 글 묵상
+                </button>
+                <button
+                    className="flex-1 bg-yellow-200 hover:bg-yellow-300 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow text-lg"
+                    onClick={onList}
+                >
+                    묵상 기도 목록 보기
                 </button>
             </div>
             <img
