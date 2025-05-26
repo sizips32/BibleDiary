@@ -46,8 +46,16 @@ export default function Home() {
     }
 
     const handleEdit = (id: string) => {
+        const diary = diaries.find(d => d.id === id)
+        if (!diary) return
         setEditId(id)
-        setView('add')
+        if (diary.type === 'egw') {
+            setEditType('egw')
+            setView('egw')
+        } else {
+            setEditType('bible')
+            setView('add')
+        }
         setSelectedId(null)
     }
 
