@@ -68,15 +68,22 @@ export default function Home() {
     }
 
     const handleSave = (item: DiaryItem) => {
-        if (editId) {
-            setDiaries(diaries.map(d => d.id === item.id ? item : d))
-        } else {
-            setDiaries([{ ...item }, ...diaries])
-        }
         if (item.type === 'egw') {
-            setView('egw-summary')
-            setSelectedId(item.id)
+            setDiaries(prev => {
+                const exists = prev.some(d => d.id === item.id)
+                const newDiaries = exists
+                    ? prev.map(d => d.id === item.id ? item : d)
+                    : [item, ...prev]
+                setSelectedId(item.id)
+                setView('egw-summary')
+                return newDiaries
+            })
         } else {
+            if (editId) {
+                setDiaries(diaries.map(d => d.id === item.id ? item : d))
+            } else {
+                setDiaries([{ ...item }, ...diaries])
+            }
             setView('list')
             setSelectedId(item.id)
         }
