@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import GoldenCircleForm from '../components/GoldenCircleForm'
 import DiaryList, { DiaryItem } from '../components/DiaryList'
 import SummaryCard from '../components/SummaryCard'
+import MainMenu from '../components/MainMenu'
 
 const STORAGE_KEY = 'bible-diary-list-v1'
 
@@ -25,7 +26,7 @@ export default function Home() {
     const [diaries, setDiaries] = useState<DiaryItem[]>([])
     const [selectedId, setSelectedId] = useState<string | null>(null)
     const [editId, setEditId] = useState<string | null>(null)
-    const [showForm, setShowForm] = useState(false)
+    const [view, setView] = useState<'menu' | 'add' | 'list' | 'egw'>('menu')
 
     useEffect(() => {
         setDiaries(loadDiaries())
@@ -37,13 +38,13 @@ export default function Home() {
 
     const handleAdd = () => {
         setEditId(null)
-        setShowForm(true)
+        setView('add')
         setSelectedId(null)
     }
 
     const handleEdit = (id: string) => {
         setEditId(id)
-        setShowForm(true)
+        setView('add')
         setSelectedId(null)
     }
 
@@ -61,19 +62,18 @@ export default function Home() {
         } else {
             setDiaries([{ ...item }, ...diaries])
         }
-        setShowForm(false)
+        setView('list')
         setEditId(null)
         setSelectedId(item.id)
     }
 
     const handleCancel = () => {
-        setShowForm(false)
+        setView('menu')
         setEditId(null)
     }
 
     const handleSelect = (id: string) => {
         setSelectedId(id)
-        setShowForm(false)
         setEditId(null)
     }
 
@@ -89,29 +89,53 @@ export default function Home() {
                 <link rel="icon" href="/favicon.svg" />
             </Head>
             <main>
-                <div className="max-w-2xl mx-auto mt-8 flex justify-end">
-                    <button
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded shadow"
-                        onClick={handleAdd}
-                    >
-                        + 새 묵상 기록 추가
-                    </button>
-                </div>
-                {showForm ? (
+                {view === 'menu' && (
+                    <MainMenu
+                        onAdd={handleAdd}
+                        onList={() => setView('list')}
+                        onEgw={() => setView('egw')}
+                    />
+                )}
+                {view === 'add' && (
                     <GoldenCircleForm
                         initialForm={editDiary || null}
                         onSave={handleSave}
                         onCancel={handleCancel}
                         isEditMode={!!editId}
                     />
-                ) : selectedDiary ? (
-                    <SummaryCard form={selectedDiary} onEdit={() => handleEdit(selectedDiary.id)} />
-                ) : null}
-                <DiaryList
-                    diaries={diaries}
-                    onEdit={handleEdit}
-                    onDelete={handleDelete}
-                />
+                )}
+                {view === 'list' && (
+                    <>
+                        <div className="max-w-2xl mx-auto mt-8 flex justify-end">
+                            <button
+                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded shadow"
+                                onClick={() => setView('menu')}
+                            >
+                                ← 메인 메뉴로
+                            </button>
+                        </div>
+                        {selectedDiary ? (
+                            <SummaryCard form={selectedDiary} onEdit={() => handleEdit(selectedDiary.id)} />
+                        ) : null}
+                        <DiaryList
+                            diaries={diaries}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                        />
+                    </>
+                )}
+                {view === 'egw' && (
+                    <div className="flex flex-col items-center justify-center min-h-[60vh]">
+                        <div className="text-2xl font-bold text-gray-700 mb-4">예언의 신 묵상</div>
+                        <div className="text-gray-500 text-lg">Coming Soon...</div>
+                        <button
+                            className="mt-8 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded shadow"
+                            onClick={() => setView('menu')}
+                        >
+                            ← 메인 메뉴로
+                        </button>
+                    </div>
+                )}
                 <footer className="text-center text-yellow-700 mt-12 mb-4">
                     © {new Date().getFullYear()} 승리복음 매일 묵상 플래너
                 </footer>
