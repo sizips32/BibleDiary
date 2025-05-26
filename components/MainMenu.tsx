@@ -20,7 +20,7 @@ export default function MainMenu({ onAdd, onList, onEgw }: MainMenuProps) {
                     className="bg-yellow-200 hover:bg-yellow-300 text-yellow-900 font-bold py-3 px-6 rounded-xl shadow text-lg"
                     onClick={onList}
                 >
-                    기록물 목록 보기
+                    묵상 기도 목록 보기
                 </button>
                 <button
                     className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-xl shadow text-lg"
