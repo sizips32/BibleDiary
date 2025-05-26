@@ -1,18 +1,14 @@
-import React, { useState } from 'react'
-import SummaryCard from './SummaryCard'
+import React, { useState, useEffect } from 'react'
+import { DiaryItem } from './DiaryList'
 
-interface FormData {
-    date: string
-    scripture: string
-    keyVerse: string
-    why: string
-    how: string
-    what: string
-    prayer: string
-    summary: string
+interface FormProps {
+    initialForm?: DiaryItem | null
+    onSave: (item: DiaryItem) => void
+    onCancel: () => void
+    isEditMode: boolean
 }
 
-const initialForm: FormData = {
+const emptyForm: Omit<DiaryItem, 'id'> = {
     date: '',
     scripture: '',
     keyVerse: '',
@@ -21,11 +17,26 @@ const initialForm: FormData = {
     what: '',
     prayer: '',
     summary: '',
+    youtubeTitle: '',
+    youtubeUrl: '',
 }
 
-export default function GoldenCircleForm() {
-    const [form, setForm] = useState<FormData>(initialForm)
-    const [submitted, setSubmitted] = useState(false)
+export default function GoldenCircleForm({ initialForm, onSave, onCancel, isEditMode }: FormProps) {
+    const [form, setForm] = useState<Omit<DiaryItem, 'id'>>(emptyForm)
+
+    useEffect(() => {
+        if (initialForm) {
+            const { id, ...rest } = initialForm
+            setForm({
+                ...emptyForm,
+                ...rest,
+                youtubeTitle: rest.youtubeTitle || '',
+                youtubeUrl: rest.youtubeUrl || '',
+            })
+        } else {
+            setForm(emptyForm)
+        }
+    }, [initialForm])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -34,15 +45,8 @@ export default function GoldenCircleForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        setSubmitted(true)
-    }
-
-    const handleEdit = () => {
-        setSubmitted(false)
-    }
-
-    if (submitted) {
-        return <SummaryCard form={form} onEdit={handleEdit} />
+        const id = initialForm?.id || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+        onSave({ id, ...form })
     }
 
     return (
@@ -73,6 +77,30 @@ export default function GoldenCircleForm() {
                         placeholder="예: 요한복음 15:5"
                         className="w-full mt-1 p-2 border rounded"
                         required
+                    />
+                </div>
+            </div>
+            <div className="flex flex-col md:flex-row gap-4">
+                <div className="flex-1">
+                    <label className="block font-semibold text-yellow-800">�� 유튜브 영상 제목</label>
+                    <input
+                        type="text"
+                        name="youtubeTitle"
+                        value={form.youtubeTitle}
+                        onChange={handleChange}
+                        placeholder="설교 영상 제목 (예: 승리하는 삶의 비결)"
+                        className="w-full mt-1 p-2 border rounded"
+                    />
+                </div>
+                <div className="flex-1">
+                    <label className="block font-semibold text-yellow-800">🔗 유튜브 영상 주소</label>
+                    <input
+                        type="url"
+                        name="youtubeUrl"
+                        value={form.youtubeUrl}
+                        onChange={handleChange}
+                        placeholder="https://youtube.com/..."
+                        className="w-full mt-1 p-2 border rounded"
                     />
                 </div>
             </div>
@@ -148,12 +176,21 @@ export default function GoldenCircleForm() {
                     required
                 />
             </div>
-            <button
-                type="submit"
-                className="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded transition"
-            >
-                저장 및 요약 보기
-            </button>
+            <div className="flex gap-2">
+                <button
+                    type="submit"
+                    className="flex-1 bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded transition"
+                >
+                    {isEditMode ? '수정 완료' : '저장 및 요약 보기'}
+                </button>
+                <button
+                    type="button"
+                    className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded transition"
+                    onClick={onCancel}
+                >
+                    취소
+                </button>
+            </div>
         </form>
     )
 }

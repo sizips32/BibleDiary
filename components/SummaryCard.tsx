@@ -10,6 +10,8 @@ interface Props {
         what: string
         prayer: string
         summary: string
+        youtubeTitle?: string
+        youtubeUrl?: string
     }
     onEdit: () => void
 }
@@ -23,6 +25,15 @@ export default function SummaryCard({ form, onEdit }: Props) {
                     <div className="mb-2"><span className="font-semibold text-yellow-800">📅 날짜:</span> {form.date}</div>
                     <div className="mb-2"><span className="font-semibold text-yellow-800">📖 본문 말씀:</span> {form.scripture}</div>
                     <div className="mb-2"><span className="font-semibold text-yellow-800">📍 핵심 구절:</span> {form.keyVerse}</div>
+                    {form.youtubeTitle && form.youtubeUrl && (
+                        <div className="mb-2 text-xs">
+                            <span className="text-blue-700">🎬
+                                <a href={form.youtubeUrl} target="_blank" rel="noopener noreferrer" className="underline ml-1">
+                                    {form.youtubeTitle}
+                                </a>
+                            </span>
+                        </div>
+                    )}
                 </div>
                 <div>
                     <div className="mb-2"><span className="font-semibold text-yellow-800">💬 오늘의 한 줄:</span> {form.summary}</div>
